@@ -29,8 +29,9 @@ RUN helm plugin install https://github.com/databus23/helm-diff --version ${HELM_
     helm plugin install https://github.com/hypnoglow/helm-s3.git --version ${HELM_S3_VERSION} && \
     helm plugin install https://github.com/aslafy-z/helm-git --version ${HELM_GIT_VERSION}
 
-ADD https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_${ARCH} /tmp/helmfile
-RUN install -o root -g root -m 0755 /tmp/helmfile /usr/bin/helmfile && \
+ADD https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_${ARCH}.tar.gz /tmp
+RUN tar -zxvf /tmp/helmfile* -C /tmp && \
+    install -o root -g root -m 0755 /tmp/helmfile /usr/bin/helmfile && \
     rm -rf /tmp/*
 RUN helmfile version
 
